@@ -1,0 +1,17 @@
+{
+  "start_date": "2020-09-01 00:00:00",
+  "end_date": "2021-03-09 00:00:00",
+  "subreddits": [
+    "BitcoinMarkets",
+    "CryptoMarkets",
+    "BitcoinBeginners",
+    "CryptoCurrencyTrading",
+    "btc",
+    "CryptoCurrency",
+    "Crypto_Currency_News",
+    "Bitcoin",
+    "SatoshiStreetBets"
+  ],
+  "trading_pair": "BTC/USDT",
+  "timeframe": "5min"
+}
