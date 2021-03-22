@@ -1,0 +1,6 @@
+/venv/
+/data/original
+/preprocessing/models/
+/analysis/.ipynb_checkpoints/
+/modeling/.ipynb_checkpoints/
+/.idea/
