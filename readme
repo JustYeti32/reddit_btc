@@ -7,7 +7,7 @@ In this project we investigate the predictive power of redditors on the bitcoin 
 
 
 ####################################################################################
-Work flow: 
+Workflow: 
 
 *** Data acquisition:
 - Use PushshiftRedditApiWrapper (praw) to scrape reddit submissions and comments (see config.json for specific setup)
