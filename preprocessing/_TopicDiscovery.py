@@ -46,11 +46,11 @@ def kmeans(dictionary, w2v, n_clusters=5, buzzwords=[], plot=True, verbose=True,
         x_pca = pca.fit_transform(X)
         centers_pca = pca.transform(cluster_model.cluster_centers_)
 
-        fig, ax = plt.subplots(figsize=(12, 8))
+        fig, ax = plt.subplots(figsize=(24, 16))
         ax.set_title("{} clusters in word embeddings".format(n_clusters))
         ax.scatter(x_pca[:, 0], x_pca[:, 1], c=cluster_model.labels_, cmap=cividis, s=15, alpha=0.75)
         for i in range(n_clusters):
-            ax.text(centers_pca[i, 0], centers_pca[i, 1], str(i), fontsize=18, backgroundcolor="bisque")
+            ax.scatter(centers_pca[i, 0], centers_pca[i, 1], s=1000, facecolor="w", edgecolor="k", alpha=0.5, linewidth=10)
 
             if verbose:
                 print(f"Most similar words to centroid {i}")
@@ -99,25 +99,31 @@ def lda(corpus, num_topics=5, save_as=None, load=None, verbose=True):
     vis = pyLDAvis.gensim.prepare(lda, bow, dictionary)
     return lda, vis
 
-def same_context(w2v, buzzwords, plot=True):
+def same_context(w2v, buzzwords, plot=True, annot=False):
     similarities = [[w2v.similarity(word_a, word_b) for word_a in buzzwords] for word_b in buzzwords]
     similarities = pd.DataFrame(similarities, index=buzzwords, columns=buzzwords)
 
     if plot:
-        fig, ax = plt.subplots(figsize=(8, 6))
+        fig, ax = plt.subplots(figsize=(16, 12))
         ax.set_title("similarities according to {}".format("w2v"))
-        sns.heatmap(similarities, annot=True, ax=ax, cmap=gist_earth_r)
+        sns.heatmap(similarities, annot=annot, ax=ax, cmap=gist_earth_r)
     return similarities
 
-def more_context(w2v, buzzwords, topn=5):
-    print("context modeled by embedding")
-    print(40 * "-")
+def more_context(w2v, buzzwords, topn=5, verbose=True):
+    if verbose:
+        print("context modeled by embedding")
+        print(40 * "-")
+
+    sim_words_dict = {}
     for word in buzzwords:
-        print(4 * " ", "|", f"other words in the context of \"{word}\":")
-        for sim_word, similarity in w2v.most_similar(word, topn=topn):
-            print(4 * " ", "|", 3 * " ", f"similarity: {round(similarity, 4)} | word: \"{sim_word}\"")
-            print(4 * " ", "|", 3 * " ", 26 * "-")
-    return
+        n_most_similar = w2v.most_similar(word, topn=topn)
+        sim_words_dict.update({word: n_most_similar})
+        if verbose:
+            print(4 * " ", "|", f"other words in the context of \"{word}\":")
+            for sim_word, similarity in n_most_similar:
+                print(4 * " ", "|", 3 * " ", f"similarity: {round(similarity, 4)} | word: \"{sim_word}\"")
+                print(4 * " ", "|", 3 * " ", 26 * "-")
+    return sim_words_dict
 
 ########################################################################################################################
 

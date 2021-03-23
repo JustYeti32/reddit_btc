@@ -142,13 +142,14 @@ class OHLCV:
         sc_label_aligned = sc_label_aligned.rename("ground truth label")
         correlations = pd.concat([sc_label, sc_label_aligned, self.data.percent_returns], axis=1).corr()
 
-        fig, ax = plt.subplots(3, 1, figsize=(12, 8))
+        fig, ax = plt.subplots(3, 1, figsize=(18, 15))
+
         ax[0].plot(self.data.percent_returns, linewidth=1, label="percent returns")
-        sc_label.plot(ax=ax[0], label="label to predict")
+        sc_label_aligned.plot(ax=ax[0], label="ground truth label")
         ax[0].legend(loc="upper left")
 
         ax[1].plot(self.data.percent_returns, linewidth=1, label="percent returns")
-        sc_label_aligned.plot(ax=ax[1], label="ground truth label")
+        sc_label.plot(ax=ax[1], label="label to predict")
         ax[1].legend(loc="upper left")
 
         ax[2].plot(self.data.stopped_percent_returns, linewidth=1, label="stopped_percent returns")

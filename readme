@@ -1,0 +1,62 @@
+Welcome to the reddit-bitcoin project!
+
+####################################################################################
+In this project we investigate the predictive power of redditors on the bitcoin price. 
+####################################################################################
+
+
+
+####################################################################################
+Work flow: 
+
+*** Data acquisition:
+- Use PushshiftRedditApiWrapper (praw) to scrape reddit submissions and comments (see config.json for specific setup)
+- Use ccxt-library to scrape bitcoin price (open, high, low, close, volume) 
+
+*** Financial data analysis:
+- Plot the bitcoin price to get a feel for it. 
+- We use the triple-barrier-labeling to identify up/down/right movements and see how these sort of stopped returns look like
+
+*** Text data analysis:
+- Look at irregularities in the data (missing values, extreme values) - get rid of obviously faulty data (wrong time stamps)
+- Look at the given text and compare with the cleaned version
+- Remove (un)common words and save the clean file
+- Extend a collection of buzzwords (asked from domain experts) via word2vec embedding
+- Look at similarities of these buzzwords according to w2v
+
+*** Modeling:
+- Track the number of times a buzzwords occurs within a fixed time frame and divide by the number of comments in each period
+- Look at the frequencies and apply smoothing
+- From this smoothed version, take samples in regular time steps (this is not necessary but the quality/time ratio is overwhelming)
+- Combine the ohlcv data and the text data
+- Train a logistic regression and reduce the number of features according to an importance measure
+- On this final collection of features, use cross validation to assess the model
+- Generate trading signals and simulate over the time period
+
+####################################################################################
+
+*** What you will find in this repo:
+- Scraping tools for ohlcv and text data
+- Full codebase for analysis and modeling
+- The actual analysis which I did
+- Full codebase for trading simulation and signal generation
+- A requirements.txt file with all the libraries necessary. I used Python 3.8
+- A full text report on the findings, limitations and techniques
+
+*** What you will not find in this repo:
+- The full dataset (you get 1% sampled uniform at random - the files are too sizable for uploading otherwise). It will do for a small test run nonetheless!
+
+####################################################################################
+
+*** How do I set this thing up?
+- Install the libraries (requirements.txt)
+- Make sure to add the project root to the PYTHONPATH (otherwise it will not identify the modules as such)
+- For scraping reddit, you need an access token for the PythonRedditApiWrapper: 
+	https://praw.readthedocs.io/en/latest/getting_started/authentication.html
+- Set the access token as environment variables in your OS (REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET", "REDDIT_USER_AGENT")
+- Use Python 3.8
+
+####################################################################################
+
+That being said - I wish you fun exploring this project and happy coding! 
+

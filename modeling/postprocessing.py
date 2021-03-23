@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 def aggregate_signals(raw_signals, pace="1D", plot=True):
     signals = raw_signals.resample(pace, label="right", closed="right").mean().rename("signals").dropna()
-    signals = signals.apply(int)
+    signals = signals.apply(round)
     supports = raw_signals.resample(pace, label="right", closed="right").count().rename("support")
 
     if plot:
