@@ -1,16 +1,12 @@
 from preprocessing import OHLCV
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import matthews_corrcoef, accuracy_score, confusion_matrix
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestClassifier
 
 import datetime as dt
 import pandas as pd
-import numpy as np
-import copy
 import seaborn as sns
 import matplotlib.pyplot as plt
 
