@@ -130,7 +130,6 @@ class OHLCV:
 
         return
 
-    # TODO perhaps deprciate
     def label_return_correlation(self, label_smoothing=None):
         sc_label = (self.data.label - 1) * self.label_threshold
         sc_label = sc_label.rename("prediction label")
