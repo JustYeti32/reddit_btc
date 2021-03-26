@@ -144,11 +144,12 @@ def decision_importance(X, y, plot=True):
     X_train = MinMaxScaler().fit_transform(X)
     model = RandomForestClassifier(class_weight="balanced")
     model.fit(X_train, y)
-    importance = pd.DataFrame(data=model.feature_importances_, index=X.columns)
+    importance = pd.DataFrame(data=model.feature_importances_, index=X.columns, columns=["importance"])
+    importance = importance.sort_values(by="importance", ascending=False)
 
     if plot:
         fig, ax = plt.subplots(figsize=(10, 8))
-        sns.heatmap(importance.sort_index(), annot=True, ax=ax, cmap=Reds)
+        sns.heatmap(importance, annot=True, ax=ax, cmap=Reds)
 
     return importance
 
